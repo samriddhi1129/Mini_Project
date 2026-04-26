@@ -7,7 +7,7 @@ import ElbowPage from './pages/ElbowPage';
 import ModelComparison from './pages/ModelComparison';
 import Recommendations from './pages/Recommendations';
 import Predict from './pages/Predict';
-import './styles.css'; // ✅ IMPORTANT
+import './styles.css'; // 
 
 const NAV = [
   { path: '/', label: 'Overview', icon: '◈' },

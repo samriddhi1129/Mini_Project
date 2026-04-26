@@ -83,7 +83,7 @@ pip install flask flask-cors pandas numpy scikit-learn kneed
 python app.py
 ```
 
-Flask will run on **http://localhost:5000**  
+
 The ML pipeline runs automatically on first start (~5 seconds).
 
 ### Step 2 — Frontend (React)
@@ -100,11 +100,6 @@ npm install
 npm start
 ```
 
-React will open at **http://localhost:3000**
-
-> The `"proxy": "http://localhost:5000"` in package.json routes all `/api/...` calls to Flask automatically.
-
----
 
 ## API Endpoints
 
@@ -122,7 +117,7 @@ React will open at **http://localhost:3000**
 ### Predict endpoint example
 
 ```bash
-curl -X POST http://localhost:5000/api/predict \
+
   -H "Content-Type: application/json" \
   -d '{
     "Income": 75000,
