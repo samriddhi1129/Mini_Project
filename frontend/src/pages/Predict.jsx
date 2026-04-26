@@ -39,7 +39,7 @@ export default function Predict() {
   const handleSubmit = async () => {
     setLoading(true); setError(null); setResult(null);
     try {
-      const resp = await fetch('/api/predict', {
+      const resp = await fetch('https://mini-project-ve29.onrender.com/api/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

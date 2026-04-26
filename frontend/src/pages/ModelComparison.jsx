@@ -6,7 +6,7 @@ const MODEL_COLORS = { KMeans: '#60a5fa', Agglomerative: '#a78bfa', DBSCAN: '#f8
 const MODEL_ICONS = { KMeans: '◈', Agglomerative: '⬡', DBSCAN: '◎' };
 
 export default function ModelComparison() {
-  const { data, loading, error } = useFetch('/api/compare-models');
+  const { data, loading, error } = useFetch('https://mini-project-ve29.onrender.com/api/compare-models');
 
   if (loading) return <Spinner />;
   if (error) return <ErrorBox msg={`Failed to load: ${error}`} />;

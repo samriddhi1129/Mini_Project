@@ -61,7 +61,7 @@ function Scene({ pointsByCluster, clusterColors, clusterNames }) {
 }
 
 export default function PCAPage() {
-  const { data, loading, error } = useFetch('/api/pca-scatter');
+  const { data, loading, error } = useFetch('https://mini-project-ve29.onrender.com/api/pca-scatter');
 
   if (loading) return <Spinner />;
   if (error) return <ErrorBox msg={`Failed to load: ${error}`} />;

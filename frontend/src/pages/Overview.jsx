@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recha
 import { StatCard, PageHeader, Card, CardTitle, Spinner, ErrorBox, useFetch } from '../components/shared';
 
 export default function Overview() {
-  const { data, loading, error } = useFetch('/api/overview');
+  const { data, loading, error } = useFetch('https://mini-project-ve29.onrender.com/api/overview');
 
   if (loading) return <Spinner />;
   if (error) return <ErrorBox msg={`Failed to load: ${error}. Is Flask running on port 5000?`} />;

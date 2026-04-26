@@ -61,7 +61,7 @@ function RecommCard({ data: rec }) {
 }
 
 export default function Recommendations() {
-  const { data, loading, error } = useFetch('/api/recommendations');
+  const { data, loading, error } = useFetch('https://mini-project-ve29.onrender.com/api/recommendations');
 
   if (loading) return <Spinner />;
   if (error) return <ErrorBox msg={`Failed to load: ${error}`} />;

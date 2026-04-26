@@ -30,7 +30,7 @@ function ChartTooltip({ active, payload }) {
 }
 
 export default function Clusters() {
-  const { data, loading, error } = useFetch('/api/cluster-summary');
+  const { data, loading, error } = useFetch('https://mini-project-ve29.onrender.com/api/cluster-summary');
   const [activeMetric, setActiveMetric] = useState('Income');
 
   if (loading) return <Spinner />;

@@ -6,7 +6,7 @@ import {
 import { PageHeader, Card, CardTitle, Spinner, ErrorBox, useFetch } from '../components/shared';
 
 export default function ElbowPage() {
-  const { data, loading, error } = useFetch('/api/elbow');
+  const { data, loading, error } = useFetch('https://mini-project-ve29.onrender.com/api/elbow');
 
   if (loading) return <Spinner />;
   if (error) return <ErrorBox msg={`Failed to load: ${error}`} />;
