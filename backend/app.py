@@ -39,6 +39,12 @@ def safe_float(v):
 # Endpoints
 # ─────────────────────────────────────────────
 
+@app.route("/")
+def home():
+    return jsonify({
+        "message": "SmartCart API is running successfully!"
+    })
+
 @app.route("/api/overview")
 def overview():
     """Total customers, avg income, avg spending, segment distribution."""
