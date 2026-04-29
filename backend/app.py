@@ -44,6 +44,11 @@ def home():
     return jsonify({
         "message": "SmartCart API is running successfully!"
     })
+@app.route("ping")
+def ping():
+    return "ok",200
+
+
 
 @app.route("/api/overview")
 def overview():
