@@ -1,0 +1,11 @@
+
+kneed==0.8.5
+Flask
+flask-cors
+pandas
+numpy
+scikit-learn
+gunicorn
+matplotlib
+joblib
+gunicorn
