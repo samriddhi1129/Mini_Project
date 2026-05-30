@@ -20,8 +20,9 @@ export default function Overview() {
       {/* Stat cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px,1fr))', gap: 12, marginBottom: '1.75rem' }}>
         <StatCard label="Total Customers" value={total_customers.toLocaleString()} color="#60a5fa" />
-        <StatCard label="Avg Income" value={`$${avg_income?.toLocaleString()}`} color="#34d399" />
-        <StatCard label="Avg Spending" value={`$${avg_spending?.toLocaleString()}`} color="#a78bfa" />
+        <StatCard label="Avg Income" value={`₹${avg_income?.toLocaleString('en-IN')}`} color="#34d399" />
+<StatCard label="Avg Spending" value={`₹${avg_spending?.toLocaleString('en-IN')}`} color="#a78bfa" />
+        
         <StatCard label="Avg Age" value={`${Math.round(avg_age)} yrs`} color="#f59e0b" />
         <StatCard label="Clusters" value={data.n_clusters} color="#f87171" />
       </div>
@@ -30,18 +31,23 @@ export default function Overview() {
         {/* Pie chart */}
         <Card>
           <CardTitle>Segment Distribution</CardTitle>
-          <ResponsiveContainer width="100%" height={260}>
+          <ResponsiveContainer width="100%" height={320}>
+
             <PieChart>
-              <Pie data={segments} dataKey="count" nameKey="name" cx="50%" cy="50%" outerRadius={90} label={({ name, pct }) => `${pct}%`}>
+              <Pie data={segments} dataKey="count" nameKey="name" cx="45%" cy="50%" outerRadius={90} label={({ name, pct }) => `${pct}%`}>
                 {segments.map((s) => (
                   <Cell key={s.cluster} fill={s.color} />
                 ))}
               </Pie>
               <Tooltip
                 formatter={(v, n, p) => [`${v} customers (${p.payload.pct}%)`, p.payload.name]}
-                contentStyle={{ background: '#1a1d27', border: '1px solid #374151', borderRadius: 8, color: '#e2e8f0' }}
+                contentStyle={{ background: '#1a1d27', border: '1px solid #374151', borderRadius: 8, color: '#ffffff' }}
+                labelStyle={{ color: '#ffffff', fontWeight: 600 }}
+                itemStyle={{ color: '#ffffff' }}
               />
-              <Legend formatter={(v) => <span style={{ color: '#9ca3af', fontSize: 13 }}>{v}</span>} />
+              <Legend formatter={(v) => <span style={{ color: '#cbd5e1', fontSize: 13 }}>{v}</span>}wrapperStyle={{ paddingTop: '16px' }}
+              />
+   
             </PieChart>
           </ResponsiveContainer>
         </Card>

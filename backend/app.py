@@ -217,6 +217,39 @@ def all_recommendations():
     """All recommendations."""
     return jsonify(RECOMMENDATIONS)
 
+@app.route("/api/pca-analysis")
+def pca_analysis():
+    """PCA component weights + variance explanation."""
+    c = get_cache()
+    pca_obj = c["pca_obj"]
+    df_encoded = c["df_encoded"]
+    variance = c["variance_ratio"]
+
+    import pandas as pd
+    components_df = pd.DataFrame(
+        pca_obj.components_,
+        columns=list(df_encoded.columns),
+        index=['PC1', 'PC2', 'PC3']
+    ).round(4)
+
+    # Sirf readable features
+    important_features = [
+        'Income', 'Total_Spending', 'Age', 'Total_Children',
+        'NumWebVisitsMonth', 'Recency', 'NumStorePurchases',
+        'NumCatalogPurchases', 'NumWebPurchases', 'NumDealsPurchases'
+    ]
+    features = [f for f in important_features if f in components_df.columns]
+    filtered = components_df[features].T
+
+    return jsonify({
+        "variance": [round(v * 100, 2) for v in variance],
+        "total_variance": round(sum(variance) * 100, 2),
+        "features": features,
+        "pc1": filtered['PC1'].tolist(),
+        "pc2": filtered['PC2'].tolist(),
+        "pc3": filtered['PC3'].tolist(),
+    })
+
 
 @app.route("/api/predict", methods=["POST"])
 def predict():

@@ -6,8 +6,8 @@ import {
 import { PageHeader, Card, CardTitle, Spinner, ErrorBox, useFetch } from '../components/shared';
 
 const METRICS = [
-  { key: 'Income',             label: 'Avg Income ($)',        color: '#60a5fa' },
-  { key: 'Total_Spending',     label: 'Avg Spending ($)',      color: '#a78bfa' },
+  { key: 'Income',             label: 'Avg Income (₹)',        color: '#60a5fa' },
+  { key: 'Total_Spending',     label: 'Avg Spending (₹)',      color: '#a78bfa' },
   { key: 'Age',                label: 'Avg Age (yrs)',         color: '#f59e0b' },
   { key: 'Recency',            label: 'Recency (days)',        color: '#f87171' },
   { key: 'NumWebVisitsMonth',  label: 'Web Visits/Month',      color: '#34d399' },
@@ -96,8 +96,8 @@ export default function Clusters() {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {[
-                ['Income', `$${c.Income?.toLocaleString()}`],
-                ['Spending', `$${c.Total_Spending?.toLocaleString()}`],
+                ['Income', `₹${c.Income?.toLocaleString()}`],
+                ['Spending', `₹${c.Total_Spending?.toLocaleString()}`],
                 ['Age', `${c.Age?.toFixed(1)} yrs`],
                 ['Recency', `${c.Recency?.toFixed(0)} days`],
                 ['Web Visits', `${c.NumWebVisitsMonth?.toFixed(1)}/mo`],

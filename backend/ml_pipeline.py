@@ -1,14 +1,3 @@
-"""
-SmartCart ML Pipeline
-Matches exactly the logic from the Jupyter notebook:
-- Feature engineering (Age, Total_Spending, Total_Children, Customer_Tenure_Days)
-- OHE encoding for Education, Living_With
-- StandardScaler
-- PCA (3 components) for both clustering AND visualization
-- KMeans (k=4), Agglomerative (k=4), DBSCAN
-- Cluster characterization using Agglomerative labels (notebook uses labels_agg)
-"""
-
 import pandas as pd
 import numpy as np
 import pickle, os
@@ -166,6 +155,7 @@ def run_pipeline():
         "scaler": scaler,
         "ohe": ohe,
         "pca_obj": pca,
+        "pca_feature_names": list(df_encoded.columns), 
         "kmeans_model": kmeans_final,
     }
     print(f"[Pipeline] Done. Customers: {len(df_encoded)}, "
@@ -179,7 +169,7 @@ def get_cache():
     return _cache
 
 
-# ─── Cluster Names (from notebook/notes image) ───
+# ─── Cluster Names  ───
 CLUSTER_NAMES = {
     0: "Family Shoppers",     # Red  — low income, low spending, more children
     1: "Premium Customers",   # Blue — high income, high spending, fewer children
