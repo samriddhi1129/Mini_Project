@@ -210,6 +210,32 @@ def all_recommendations():
     """All recommendations."""
     return jsonify(RECOMMENDATIONS)
 
+
+    @app.route("/api/kmeans-scatter")
+def kmeans_scatter():
+    c = get_cache()
+    X_pca = c["X_pca"]
+    labels = c["labels_kmeans"]
+
+    np.random.seed(42)
+    idx = np.random.choice(len(X_pca), min(500, len(X_pca)), replace=False)
+
+    points = [
+        {
+            "x": round(float(X_pca[i, 0]), 4),
+            "y": round(float(X_pca[i, 1]), 4),
+            "z": round(float(X_pca[i, 2]), 4),
+            "cluster": int(labels[i])
+        }
+        for i in idx
+    ]
+
+    return jsonify({
+        "points": points,
+        "cluster_colors": CLUSTER_COLORS,
+        "cluster_names": CLUSTER_NAMES
+    })
+
 @app.route("/api/pca-analysis")
 def pca_analysis():
     """PCA component weights + variance explanation."""
