@@ -1,8 +1,3 @@
-"""
-SmartCart Flask API
-Serves ML results to React frontend.
-"""
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import numpy as np
@@ -177,32 +172,30 @@ def elbow():
 
 @app.route("/api/compare-models")
 def compare_models():
-    """Silhouette scores for KMeans, Agglomerative, DBSCAN."""
     c = get_cache()
     return jsonify([
-        {
-            "model": "KMeans",
-            "silhouette": c["sil_kmeans"],
-            "clusters": 4,
-            "noise_pct": 0,
-            "notes": "Best overall balance of compactness and separation"
-        },
         {
             "model": "Agglomerative",
             "silhouette": c["sil_agg"],
             "clusters": 4,
             "noise_pct": 0,
-            "notes": "Ward linkage, hierarchical — used for cluster characterization"
+            "notes": "Visually best-separated clusters in 3D PCA space. Ward linkage produces compact, well-defined groups. Chosen for cluster characterization in this project."
+        },
+        {
+            "model": "KMeans",
+            "silhouette": c["sil_kmeans"],
+            "clusters": 4,
+            "noise_pct": 0,
+            "notes": "Slightly lower silhouette score. Selected for prediction API due to faster inference on new data."
         },
         {
             "model": "DBSCAN",
             "silhouette": c["sil_db"],
             "clusters": c["n_db_clusters"],
             "noise_pct": c["db_noise_pct"],
-            "notes": "Density-based; struggles with high-dimensional uniform data"
+            "notes": "Not suitable — negative silhouette score. Found uneven clusters with noise points. Customer data too uniform for density-based clustering."
         }
     ])
-
 
 @app.route("/api/recommendations/<int:cluster_id>")
 def recommendations(cluster_id):

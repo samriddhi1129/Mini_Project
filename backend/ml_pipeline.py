@@ -86,17 +86,17 @@ def run_pipeline():
     # ── 10. Elbow & Silhouette ──
     wcss, sil_scores = [], []
     for k in range(1, 11):
-        km = KMeans(n_clusters=k, random_state=42, n_init=10)
+        km = KMeans(n_clusters=k, random_state=42)
         km.fit_predict(X_pca)
         wcss.append(round(km.inertia_, 2))
     for k in range(2, 11):
-        km = KMeans(n_clusters=k, random_state=42, n_init=10)
+        km = KMeans(n_clusters=k, random_state=42)
         lbl = km.fit_predict(X_pca)
         sil_scores.append(round(silhouette_score(X_pca, lbl), 4))
 
     # ── 11. Clustering ──
     # KMeans k=4
-    kmeans_final = KMeans(n_clusters=4, random_state=42, n_init=10)
+    kmeans_final = KMeans(n_clusters=4, random_state=42)
     labels_kmeans = kmeans_final.fit_predict(X_pca)
 
     # Agglomerative k=4 (notebook uses these labels for characterization)
