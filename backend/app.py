@@ -209,10 +209,9 @@ def recommendations(cluster_id):
 def all_recommendations():
     """All recommendations."""
     return jsonify(RECOMMENDATIONS)
-
-
-    @app.route("/api/kmeans-scatter")
+@app.route("/api/kmeans-scatter")
 def kmeans_scatter():
+    """3D PCA coordinates with KMeans labels."""
     c = get_cache()
     X_pca = c["X_pca"]
     labels = c["labels_kmeans"]
