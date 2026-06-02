@@ -3,6 +3,7 @@ import numpy as np
 import pickle, os
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.decomposition import PCA
+from scipy.stats import mode
 from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from sklearn.metrics import silhouette_score
 
@@ -102,6 +103,13 @@ def run_pipeline():
     # Agglomerative k=4 (notebook uses these labels for characterization)
     agg_clf = AgglomerativeClustering(n_clusters=4, linkage="ward")
     labels_agg = agg_clf.fit_predict(X_pca)
+    
+    km_to_agg_mapping = {}
+    for k in range(4):
+        mask = labels_kmeans == k
+        agg_label = mode(labels_agg[mask], keepdims=True).mode[0]
+        km_to_agg_mapping[k] = int(agg_label)
+    print(f"[Pipeline] KMeans→Agg mapping: {km_to_agg_mapping}")
 
     # DBSCAN
     db = DBSCAN(eps=0.5, min_samples=5)
@@ -139,6 +147,7 @@ def run_pipeline():
     _cache = {
         "df_encoded": df_encoded,
         "X_pca": X_pca,
+        "km_to_agg_mapping": km_to_agg_mapping,
         "labels_kmeans": labels_kmeans,
         "labels_agg": labels_agg,
         "labels_dbscan": labels_dbscan,

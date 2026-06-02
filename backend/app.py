@@ -271,17 +271,6 @@ def pca_analysis():
 
 @app.route("/api/predict", methods=["POST"])
 def predict():
-    """
-    Predict cluster for a new customer.
-    Expects JSON with fields:
-      Income, Age, Total_Spending, Total_Children,
-      Customer_Tenure_Days, Recency,
-      NumWebVisitsMonth, NumWebPurchases,
-      NumCatalogPurchases, NumStorePurchases, NumDealsPurchases,
-      Response, Complain,
-      Education (Graduate/Postgraduate/Undergraduate),
-      Living_With (Alone/Partner)
-    """
     data = request.get_json()
 
     c = get_cache()
@@ -290,15 +279,14 @@ def predict():
     pca_obj = c["pca_obj"]
     kmeans_model = c["kmeans_model"]
     col_order = c["ohe_cols"]
+    km_to_agg = c["km_to_agg_mapping"]  # ← NEW
 
     try:
-        # Build categorical OHE
         education = data.get("Education", "Graduate")
         living_with = data.get("Living_With", "Alone")
         ohe_arr = ohe.transform([[education, living_with]])
         ohe_cols = ohe.get_feature_names_out(["Education", "Living_With"])
 
-        # Numeric features (same order as df_encoded)
         import pandas as pd
         row = {col: 0.0 for col in col_order}
         numeric_map = {
@@ -326,7 +314,12 @@ def predict():
         X_input = pd.DataFrame([row])[col_order]
         X_scaled = scaler.transform(X_input)
         X_pca_input = pca_obj.transform(X_scaled)
-        cluster = int(kmeans_model.predict(X_pca_input)[0])
+
+        # KMeans se predict karo
+        cluster_kmeans = int(kmeans_model.predict(X_pca_input)[0])
+
+        # Agglomerative cluster mein map karo
+        cluster = km_to_agg[cluster_kmeans]
 
         return jsonify({
             "cluster": cluster,
